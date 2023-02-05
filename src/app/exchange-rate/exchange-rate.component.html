@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="item">
+    USD
+    <span *ngIf="isLoaded; else loading">{{ curentRateUSD }}</span>
+  </div>
+  <div class="item">
+    EUR
+    <span *ngIf="isLoaded; else loading">{{ curentRateEUR }}</span>
+  </div>
+
+  <ng-template #loading>
+    <app-loading></app-loading>
+  </ng-template>
+</div>

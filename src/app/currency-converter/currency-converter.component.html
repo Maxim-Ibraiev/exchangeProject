@@ -1,0 +1,51 @@
+<h2 class="header"><span class="binding"> Currency converter </span></h2>
+
+<form class="wrapper">
+  <div class="formContainer" [formGroup]="firstInput">
+    <input
+      type="number"
+      class="input"
+      formControlName="inputValue"
+      (change)="handleChange('firstInput')"
+    />
+    <select
+      name="from"
+      id="from"
+      formControlName="currency"
+      (change)="handleChange('firstInput')"
+    >
+      <option
+        *ngFor="let currency of supportingCurrency; let ind = index"
+        value="{{ currency }}"
+      >
+        {{ isLoadingCurrency && ind == 1 ? "loading" : currency }}
+      </option>
+    </select>
+  </div>
+
+  <div class="logo">
+    <app-logo></app-logo>
+  </div>
+
+  <div class="formContainer" [formGroup]="secondInput">
+    <input
+      type="number"
+      class="input"
+      formControlName="inputValue"
+      (change)="handleChange('secondInput')"
+    />
+    <select
+      name="to"
+      id="to"
+      formControlName="currency"
+      (change)="handleChange('secondInput')"
+    >
+      <option
+        *ngFor="let currency of supportingCurrency; let ind = index"
+        value="{{ currency }}"
+      >
+        {{ isLoadingCurrency && ind == 1 ? "loading" : currency }}
+      </option>
+    </select>
+  </div>
+</form>
