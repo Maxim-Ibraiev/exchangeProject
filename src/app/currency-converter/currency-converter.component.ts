@@ -8,7 +8,6 @@ import { ConvertElement, ExchangeService } from '../exchange.service';
   styleUrls: ['./currency-converter.component.scss'],
 })
 export class CurrencyConverterComponent {
-  exchangeService = new ExchangeService();
   defualtCyrrency = 'UAH: Ukrainian Hryvnia';
   supportingCurrency = [this.defualtCyrrency, this.defualtCyrrency];
   isLoadingCurrency = true;
@@ -23,8 +22,7 @@ export class CurrencyConverterComponent {
   });
 
   constructor(private fb: FormBuilder) {
-    this.exchangeService
-      .getAllSymbols()
+    ExchangeService.getAllSymbols()
       .then((res) => (this.supportingCurrency = res))
       .finally(() => (this.isLoadingCurrency = false));
   }
@@ -41,7 +39,7 @@ export class CurrencyConverterComponent {
       symbol: this[inputName].value.currency?.split(':')[0] || to,
     };
 
-    const result = await this.exchangeService.getConversion(from, to);
+    const result = await ExchangeService.getConversion(from, to);
 
     this[otherInputName].patchValue({ inputValue: Number(result) });
   };

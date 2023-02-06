@@ -12,12 +12,11 @@ export class ExchangeRateComponent implements OnInit {
   isLoaded = false;
 
   async ngOnInit(): Promise<void> {
-    const exchange = new ExchangeService();
     const fromUSD = { symbol: 'USD', amount: 1 };
     const fromEUR = { symbol: 'EUR', amount: 1 };
 
-    this.curentRateUSD = await exchange.getConversion(fromUSD, 'UAH');
-    this.curentRateEUR = await exchange.getConversion(fromEUR, 'UAH');
+    this.curentRateUSD = await ExchangeService.getConversion(fromUSD, 'UAH');
+    this.curentRateEUR = await ExchangeService.getConversion(fromEUR, 'UAH');
 
     this.isLoaded = true;
   }

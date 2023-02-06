@@ -15,23 +15,14 @@ export type ConvertElement = {
   providedIn: 'root',
 })
 export class ExchangeService {
-  private currentRate: Promise<StateResponse>;
-  private symbols: Promise<SymbolResponse>;
-  constructor() {
-    const api = new ApiService();
-
-    this.currentRate = api.getCurrentRate();
-    this.symbols = api.getAllSymbols();
-  }
-
-  private errorHandler = (
+  private static errorHandler = (
     error: (StateResponse | SymbolResponse) | ErrorResponse
   ) => {
     alert(JSON.stringify(error));
   };
 
-  getConversion = async (from: ConvertElement, to: string) => {
-    const rateResponse = await this.currentRate;
+  static async getConversion(from: ConvertElement, to: string) {
+    const rateResponse = await ApiService.getCurrentRate();
 
     if (rateResponse.success) {
       const coeficientFromEUR = rateResponse.rates[to];
@@ -43,10 +34,10 @@ export class ExchangeService {
       this.errorHandler(rateResponse);
       return 0;
     }
-  };
+  }
 
-  getAllSymbols = async () => {
-    const symbolsResponse = await this.symbols;
+  static async getAllSymbols() {
+    const symbolsResponse = await ApiService.getAllSymbols();
 
     if (symbolsResponse.success) {
       const symbolsArr = Object.entries(symbolsResponse.symbols);
@@ -62,5 +53,5 @@ export class ExchangeService {
       this.errorHandler(symbolsResponse);
       return ['UAH: Ukrainian Hryvnia'];
     }
-  };
+  }
 }
